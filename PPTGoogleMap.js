@@ -1,6 +1,7 @@
 'use strict';
 
-import React, { requireNativeComponent, Component } from 'react-native';
+import React, { Component } from 'react';
+import { requireNativeComponent } from 'react-native';
 import resolveAssetSource from 'react-native/Libraries/Image/resolveAssetSource';
 
 class MapView extends Component {
