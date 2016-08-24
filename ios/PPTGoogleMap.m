@@ -51,7 +51,7 @@
 {
     zoom = ((NSNumber*)cameraPosition[@"zoom"]).doubleValue;
     
-    if (cameraPosition[@"zoom"]) {
+    if (cameraPosition[@"auto"]) {
         locationManager = [[CLLocationManager alloc] init];
         
         locationManager.delegate = self;
