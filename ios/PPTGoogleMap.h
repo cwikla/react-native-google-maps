@@ -19,6 +19,6 @@
 @property (nonatomic) BOOL *myLocationButton;
 @property (nonatomic) BOOL *indoorPicker;
 @property (nonatomic) BOOL *allowScrollGesturesDuringRotateOrZoom;
-@property (nonatomic, copy) NSArray *markers;
+@property (nonatomic) NSMutableDictionary *overlays;
 
 @end

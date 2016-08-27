@@ -5,8 +5,63 @@
 #import "RCTLog.h"
 #import "RCTUtils.h"
 
+#import "UIColor+HexString.h"
+
+@interface PPTMarker : GMSMarker
+@property (nonatomic) NSString *key;
+@end
+
+@implementation PPTMarker
+
++ (instancetype)markerWithPosition:(CLLocationCoordinate2D)position
+                            andKey:key
+{
+    PPTMarker *marker = [[PPTMarker alloc] init];
+    marker.key = key;
+    marker.position = position;
+    return marker;
+}
+@end
+
+@interface PPTCircle : GMSCircle
+@property (nonatomic) NSString *key;
+@end
+
+@implementation PPTCircle
+
++ (instancetype)circleWithPosition:(CLLocationCoordinate2D)position
+                            radius:(CLLocationDistance)radius
+                            andKey:(NSString *)key
+{
+    PPTCircle *circle = [[PPTCircle alloc] init];
+    circle.position = position;
+    circle.radius = radius;
+    circle.key = key;
+    return circle;
+}
+@end
+
+@interface PPTPolygon : GMSPolygon
+@property (nonatomic) NSString *key;
+@end
+
+@implementation PPTPolygon
+
++ (instancetype)polygonWithPath:(GMSPath *)path
+                         andKey:(NSString *)key
+{
+    PPTPolygon *poly = [[PPTPolygon alloc] init];
+    poly.path = path;
+    poly.key = key;
+    return poly;
+}
+@end
+
 @implementation PPTGoogleMap {
     NSMutableDictionary *markerImages;
+    NSMutableDictionary *markers;
+    NSMutableDictionary *circles;
+    NSMutableDictionary *polygons;
     CLLocationManager *locationManager;
     float zoom;
 }
@@ -20,6 +75,9 @@
 {
     if (self = [super init]) {
         markerImages = [[NSMutableDictionary alloc] init];
+        markers = [[NSMutableDictionary alloc] init];
+        circles = [[NSMutableDictionary alloc] init];
+        polygons = [[NSMutableDictionary alloc] init];
     }
     
     return self;
@@ -89,46 +147,161 @@
 }
 
 /**
+ * Adds circles to the map.
+ *
+ * @return void
+ */
+- (void)setCircles:(NSArray *)inCircles
+{
+    NSMutableDictionary *found = [[NSMutableDictionary alloc] init];
+
+    for (NSDictionary* circle in inCircles) {
+        NSString *key = circle[@"key"];
+        CLLocationDegrees latitude = ((NSNumber*)circle[@"latitude"]).doubleValue;
+        CLLocationDegrees longitude = ((NSNumber*)circle[@"longitude"]).doubleValue;
+        CLLocationDistance radius = ((NSNumber*)circle[@"radius"]).doubleValue;
+        
+        PPTCircle *mapCircle = circles[key];
+        if (!mapCircle) {
+            mapCircle = [PPTCircle circleWithPosition:CLLocationCoordinate2DMake(latitude, longitude) radius:radius andKey:key];
+        }
+        
+        if (circle[@"strokeColor"]) {
+            mapCircle.strokeColor = [self getColor:circle[@"strokeColor"]];
+        }
+        if (circle[@"fillColor"]) {
+            mapCircle.fillColor = [self getColor:circle[@"fillColor"]];
+        }
+       
+        mapCircle.tappable = circle[@"tappable"];
+        
+        mapCircle.map = self;
+        found[key] = mapCircle;
+    }
+    
+    for(NSString *key in circles) {
+        if (!found[key]) {
+            PPTCircle *circle = circles[key];
+            circle.map = nil;
+        }
+    }
+    
+    circles = found;
+
+}
+
+/**
+ * Adds Polygon to the map.
+ *
+ * @return void
+ */
+- (void)setPolygons:(NSArray *)inPolygons
+{
+    NSMutableDictionary *found = [[NSMutableDictionary alloc] init];
+
+    for (NSDictionary* polygon in inPolygons) {
+        NSString *key = polygon[@"key"];
+        
+        PPTPolygon *mapPolygon = polygons[key];
+        
+        if (!mapPolygon) {
+            NSMutableArray *arr = [[NSMutableArray alloc] init];
+        
+            GMSMutablePath *path = [[GMSMutablePath alloc] init];
+        
+            for(NSDictionary *inCoord in polygon[@"path"]) {
+                CLLocationDegrees latitude = ((NSNumber*)inCoord[@"latitude"]).doubleValue;
+                CLLocationDegrees longitude = ((NSNumber*)inCoord[@"longitude"]).doubleValue;
+
+                CLLocationCoordinate2D coord = CLLocationCoordinate2DMake(latitude, longitude);
+                [path addCoordinate:coord];
+            }
+        
+            mapPolygon = [PPTPolygon polygonWithPath:path andKey:key];
+        }
+        
+        if (polygon[@"strokeColor"]) {
+            mapPolygon.strokeColor = [self getColor:polygon[@"strokeColor"]];
+        }
+        if (polygon[@"fillColor"]) {
+            mapPolygon.fillColor = [self getColor:polygon[@"fillColor"]];
+        }
+        mapPolygon.tappable = polygon[@"tappable"];
+        
+        found[key] = mapPolygon;
+        mapPolygon.map = self;
+    }
+    
+    for(NSString *key in polygons) {
+        if (!found[key]) {
+            PPTPolygon *polygon = polygons[key];
+            polygon.map = nil;
+        }
+    }
+    
+    polygons = found;
+}
+
+/**
  * Adds marker icons to the map.
  *
  * @return void
  */
-- (void)setMarkers:(NSArray *)markers
+- (void)setMarkers:(NSArray *)inMarkers
 {
-    [self clear];
+    NSMutableDictionary *found = [[NSMutableDictionary alloc] init];
     
-    for (NSDictionary* marker in markers) {
-        NSString *publicId = marker[@"publicId"];
+    for (NSDictionary* marker in inMarkers) {
+        NSString *key = marker[@"key"];
         CLLocationDegrees latitude = ((NSNumber*)marker[@"latitude"]).doubleValue;
         CLLocationDegrees longitude = ((NSNumber*)marker[@"longitude"]).doubleValue;
         
-        GMSMarker* mapMarker = [GMSMarker markerWithPosition:CLLocationCoordinate2DMake(latitude, longitude)];
+        GMSMarker *mapMarker = markers[key];
+        
+        if (!mapMarker) {
+            mapMarker = [PPTMarker markerWithPosition:CLLocationCoordinate2DMake(latitude, longitude) andKey:key];
+        }
         
         if (marker[@"icon"]) {
             mapMarker.icon = [self getMarkerImage:marker];
-        } else if (marker[@"hexColor"]) {
-            UIColor *color = [self getMarkerColor:marker];
+            
+        } else if (marker[@"fillColor"]) {
+            UIColor *color = [self getColor:marker[@"fillColor"]];
             mapMarker.icon = [GMSMarker markerImageWithColor:color];
         }
         
-        mapMarker.userData = publicId;
         mapMarker.map = self;
+        found[key] = mapMarker;
     }
+    
+    for(NSString *key in markers) {
+        if (!found[key]) {
+            PPTMarker *marker = markers[key];
+            marker.map = nil;
+        }
+    }
+    
+    markers = found;
 }
 
 /**
  * Get a UIColor from the marker's 'color' string
+ * L...http://stackoverflow.com/questions/1560081/how-can-i-create-a-uicolor-from-a-hex-string
  *
  * @return UIColor
  */
-- (UIColor *)getMarkerColor:(NSDictionary *)marker
+- (UIColor *)getColor:(NSString *)hexString
 {
-    NSString *hexString = marker[@"hexColor"];
+    
+    return [UIColor colorWithHexString:hexString];
+    
+#if 0
     unsigned rgbValue = 0;
     NSScanner *scanner = [NSScanner scannerWithString:hexString];
     [scanner setScanLocation:1]; // bypass '#' character
     [scanner scanHexInt:&rgbValue];
     return [UIColor colorWithRed:((rgbValue & 0xFF0000) >> 16)/255.0 green:((rgbValue & 0xFF00) >> 8)/255.0 blue:(rgbValue & 0xFF)/255.0 alpha:0.8];
+#endif
 }
 
 /**

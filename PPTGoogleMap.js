@@ -4,6 +4,9 @@ import React, { Component } from 'react';
 import { requireNativeComponent } from 'react-native';
 import resolveAssetSource from 'react-native/Libraries/Image/resolveAssetSource';
 
+import { NativeModules } from 'react-native';
+var PPTGoogleMapManager = NativeModules.PPTGoogleMapManager;
+
 class MapView extends Component {
     /**
      * Any metadata that's associated with map markers.
@@ -50,6 +53,7 @@ class MapView extends Component {
             case 'didEndDraggingMarker':
                 this._handleMarkerEvent(event);
                 break;
+
             default:
                 this.props[event.nativeEvent.event] && this.props[event.nativeEvent.event](event.nativeEvent);
                 break;
@@ -78,6 +82,10 @@ class MapView extends Component {
         this.props[event.nativeEvent.event](event.nativeEvent);
     }
 
+		componentWillUpdate(nextProps: Object, nextState: Object) {
+			//PPTGoogleMapManager.clear(this);
+		}
+
     /**
      * Store any map marker metadata in JS land so it doesn't need to travel across the react bridge.
      *
@@ -92,10 +100,10 @@ class MapView extends Component {
 
         nextProps.markers.map((marker) => {
             let markerProps = {
-                publicId: marker.id,
+                key: marker.key,
                 latitude: marker.latitude,
                 longitude: marker.longitude,  
-                hexColor: marker.hexColor,  
+                fillColor: marker.fillColor,  
             }
             if (marker.icon) {
                 markerProps.icon = resolveAssetSource(marker.icon);
@@ -114,7 +122,7 @@ class MapView extends Component {
      */
     render() {
         return (
-            <PPTGoogleMap {...this.props} onChange={this._onChange} markers={this._markersForBridge} />
+            <PPTGoogleMap {...this.props} onChange={this._onChange} markers={this.props.markers} circles={this.props.circles}/>
         );
     }
 }
@@ -180,12 +188,32 @@ MapView.propTypes = {
      * An array of markers which will be displayed on the map.
      */
     markers: React.PropTypes.arrayOf(React.PropTypes.shape({
-        id: React.PropTypes.string,
+        key: React.PropTypes.string.isRequired,
         latitude: React.PropTypes.number.isRequired,
         longitude: React.PropTypes.number.isRequired,
         icon: React.PropTypes.any,
-        hexColor: React.PropTypes.string,
-        meta: React.PropTypes.object
+        fillColor: React.PropTypes.string,
+    })),
+
+		circles: React.PropTypes.arrayOf(React.PropTypes.shape({
+        key: React.PropTypes.string.isRequired,
+        latitude: React.PropTypes.number.isRequired,
+        longitude: React.PropTypes.number.isRequired,
+        radius: React.PropTypes.number.isRequired,
+        fillColor: React.PropTypes.string,
+        strokeColor: React.PropTypes.string,
+				tappable: React.PropTypes.bool,
+    })),
+
+		polygons: React.PropTypes.arrayOf(React.PropTypes.shape({
+        key: React.PropTypes.string.isRequired,
+				path: React.PropTypes.arrayOf(React.PropTypes.shape({
+          latitude: React.PropTypes.number.isRequired,
+          longitude: React.PropTypes.number.isRequired,
+        }).isRequired).isRequired,
+        fillColor: React.PropTypes.string,
+        strokeColor: React.PropTypes.string,
+				tappable: React.PropTypes.bool,
     })),
 
     /**

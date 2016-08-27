@@ -35,6 +35,8 @@ RCT_EXPORT_VIEW_PROPERTY(myLocationButton, BOOL)
 RCT_EXPORT_VIEW_PROPERTY(indoorPicker, BOOL)
 RCT_EXPORT_VIEW_PROPERTY(allowScrollGesturesDuringRotateOrZoom, BOOL)
 RCT_EXPORT_VIEW_PROPERTY(markers, NSDictionaryArray)
+RCT_EXPORT_VIEW_PROPERTY(circles, NSDictionaryArray)
+RCT_EXPORT_VIEW_PROPERTY(polygons, NSDictionaryArray)
 
 #pragma mark GMSMapViewDelegate
 
@@ -139,6 +141,7 @@ RCT_EXPORT_VIEW_PROPERTY(markers, NSDictionaryArray)
   [self.bridge.eventDispatcher sendInputEventWithName:@"topChange" body:event];
 }
 
+
 /**
  * Called after a marker has been tapped.
  *
@@ -146,16 +149,20 @@ RCT_EXPORT_VIEW_PROPERTY(markers, NSDictionaryArray)
  */
 - (BOOL)mapView:(GMSMapView *)mapView didTapMarker:(GMSMarker *)marker
 {
+    CLLocationCoordinate2D thing = marker.position;
+    
+    NSNumber *latitude = [[NSNumber alloc] initWithDouble:marker.position.latitude];
+    NSNumber *longitude = [[NSNumber alloc] initWithDouble:marker.position.longitude];
+    
   NSDictionary *event = @{
                           @"target": mapView.reactTag,
                           @"event": @"didTapMarker",
                           @"data": @{
-                              @"publicId": marker.userData,
+                                  @"publicId": (marker.userData ? marker.userData : [NSNull null]),
                               @"latitude": [[NSNumber alloc] initWithDouble:marker.position.latitude],
                               @"longitude": [[NSNumber alloc] initWithDouble:marker.position.longitude]
                               }
                           };
-  
   [self.bridge.eventDispatcher sendInputEventWithName:@"topChange" body:event];
   
   return NO;
@@ -184,7 +191,7 @@ RCT_EXPORT_VIEW_PROPERTY(markers, NSDictionaryArray)
                           @"target": mapView.reactTag,
                           @"event": @"didTapMarker",
                           @"data": @{
-                              @"publicId": marker.userData,
+                              @"publicId": (marker.userData ? marker.userData : [NSNull null]),
                               @"latitude": [[NSNumber alloc] initWithDouble:marker.position.latitude],
                               @"longitude": [[NSNumber alloc] initWithDouble:marker.position.longitude]
                               }
@@ -204,7 +211,7 @@ RCT_EXPORT_VIEW_PROPERTY(markers, NSDictionaryArray)
                           @"target": mapView.reactTag,
                           @"event": @"didTapMarker",
                           @"data": @{
-                              @"publicId": marker.userData,
+                              @"publicId": (marker.userData ? marker.userData : [NSNull null]),
                               @"latitude": [[NSNumber alloc] initWithDouble:marker.position.latitude],
                               @"longitude": [[NSNumber alloc] initWithDouble:marker.position.longitude]
                               }
@@ -224,7 +231,7 @@ RCT_EXPORT_VIEW_PROPERTY(markers, NSDictionaryArray)
                           @"target": mapView.reactTag,
                           @"event": @"didTapMarker",
                           @"data": @{
-                              @"publicId": marker.userData,
+                              @"publicId": (marker.userData ? marker.userData : [NSNull null]),
                               @"latitude": [[NSNumber alloc] initWithDouble:marker.position.latitude],
                               @"longitude": [[NSNumber alloc] initWithDouble:marker.position.longitude]
                               }
