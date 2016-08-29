@@ -8,9 +8,7 @@
   },
   "main": "PPTGoogleMap",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "preinstall": "./sdk.sh",
-    "preversion, version": "./sdk.sh"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
     "google maps",

@@ -28,21 +28,6 @@
 /* Begin PBXFileReference section */
 		0CAA8FF71BFB74B7005A91B8 /* PPTGoogleMapProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPTGoogleMapProvider.h; sourceTree = "<group>"; };
 		0CAA8FF81BFB74B7005A91B8 /* PPTGoogleMapProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPTGoogleMapProvider.m; sourceTree = "<group>"; };
-		0CAA90DA1BFB7530005A91B8 /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMaps.framework; path = "../ios_modules/GoogleMaps-1.11.1/Frameworks/GoogleMaps.framework"; sourceTree = "<group>"; };
-		0CAA90DC1BFB7543005A91B8 /* GoogleMaps.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GoogleMaps.bundle; path = "../ios_modules/GoogleMaps-1.11.1/Frameworks/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle"; sourceTree = "<group>"; };
-		0CAA90DD1BFB7688005A91B8 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		0CAA90DF1BFB7693005A91B8 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		0CAA90E11BFB769E005A91B8 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		0CAA90E31BFB76A7005A91B8 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
-		0CAA90E51BFB76B2005A91B8 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
-		0CAA90E71BFB76BC005A91B8 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
-		0CAA90E91BFB76C5005A91B8 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		0CAA90EB1BFB76D1005A91B8 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		0CAA90ED1BFB76EB005A91B8 /* libc++.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.1.dylib"; path = "/usr/lib/libc++.1.dylib"; sourceTree = "<absolute>"; };
-		0CAA90EF1BFB76FD005A91B8 /* libicucore.A.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.A.dylib; path = /usr/lib/libicucore.A.dylib; sourceTree = "<absolute>"; };
-		0CAA90F11BFB770E005A91B8 /* libz.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.dylib; path = /usr/lib/libz.1.dylib; sourceTree = "<absolute>"; };
-		0CAA90F31BFB771A005A91B8 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
-		0CAA90F51BFB7728005A91B8 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		0CAA91351BFB7E21005A91B8 /* GoogleMapsApi.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = GoogleMapsApi.plist; sourceTree = "<group>"; };
 		0CAA91381BFB8086005A91B8 /* PPTGoogleMapManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPTGoogleMapManager.h; sourceTree = "<group>"; };
 		0CAA91391BFB8086005A91B8 /* PPTGoogleMapManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPTGoogleMapManager.m; sourceTree = "<group>"; };
@@ -64,28 +49,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0CAA8FFA1BFB7508005A91B8 /* Google Maps SDK */ = {
-			isa = PBXGroup;
-			children = (
-				0CAA90F11BFB770E005A91B8 /* libz.1.dylib */,
-				0CAA90EF1BFB76FD005A91B8 /* libicucore.A.dylib */,
-				0CAA90ED1BFB76EB005A91B8 /* libc++.1.dylib */,
-				0CAA90DC1BFB7543005A91B8 /* GoogleMaps.bundle */,
-				0CAA90F51BFB7728005A91B8 /* Accelerate.framework */,
-				0CAA90F31BFB771A005A91B8 /* CoreBluetooth.framework */,
-				0CAA90EB1BFB76D1005A91B8 /* SystemConfiguration.framework */,
-				0CAA90E91BFB76C5005A91B8 /* QuartzCore.framework */,
-				0CAA90E71BFB76BC005A91B8 /* OpenGLES.framework */,
-				0CAA90E51BFB76B2005A91B8 /* ImageIO.framework */,
-				0CAA90E31BFB76A7005A91B8 /* GLKit.framework */,
-				0CAA90E11BFB769E005A91B8 /* CoreLocation.framework */,
-				0CAA90DF1BFB7693005A91B8 /* CoreData.framework */,
-				0CAA90DD1BFB7688005A91B8 /* AVFoundation.framework */,
-				0CAA90DA1BFB7530005A91B8 /* GoogleMaps.framework */,
-			);
-			name = "Google Maps SDK";
-			sourceTree = "<group>";
-		};
 		134814211AA4EA7D00B7C361 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -106,7 +69,6 @@
 				0CAA91391BFB8086005A91B8 /* PPTGoogleMapManager.m */,
 				0CAA8FF71BFB74B7005A91B8 /* PPTGoogleMapProvider.h */,
 				0CAA8FF81BFB74B7005A91B8 /* PPTGoogleMapProvider.m */,
-				0CAA8FFA1BFB7508005A91B8 /* Google Maps SDK */,
 				134814211AA4EA7D00B7C361 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -288,7 +250,7 @@
 		58B511F01A9E6C8500147676 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../ios_modules/**";
+				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../../../../ios/Pods/**";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -304,7 +266,7 @@
 		58B511F11A9E6C8500147676 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../ios_modules/**";
+				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../../../../ios/Pods/**";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,

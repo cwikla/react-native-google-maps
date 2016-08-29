@@ -246,9 +246,14 @@ MapView.propTypes = {
     didTapMarker: React.PropTypes.func,
 
     /**
-     * Called after an overlay has been tapped.
+     * Called after a circle has been tapped.
      */
-    didTapOverlay: React.PropTypes.func,
+    didTapCircle: React.PropTypes.func,
+
+    /**
+     * Called after a polygon has been tapped.
+     */
+    didTapPolygon: React.PropTypes.func,
 
     /**
      * Called when dragging has been initiated on a marker.

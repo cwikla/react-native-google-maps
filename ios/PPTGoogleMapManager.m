@@ -176,18 +176,26 @@ RCT_EXPORT_VIEW_PROPERTY(polygons, NSDictionaryArray)
 - (void)mapView:(GMSMapView *)mapView didTapOverlay:(GMSOverlay *)overlay
 {
     NSString *key = [NSNull null];
+    NSString *eventName = nil;
+    
+    NSMutableDictionary *event = [[NSMutableDictionary alloc] init];
+    event[@"target"] = mapView.reactTag;
     
     if ([overlay isKindOfClass:[PPTPolygon class]]) {
         key = ((PPTPolygon *)overlay).key;
+        eventName = @"didTapPolygon";
     }
     else if ([overlay isKindOfClass:[PPTCircle class]]) {
         key = ((PPTCircle *)overlay).key;
+        eventName = @"didTapCircle";
     }
     else if ([overlay isKindOfClass:[PPTMarker class]]) {
         key = ((PPTMarker *)overlay).key;
+        eventName = @"didTapMarker";
     }
     
-    NSDictionary *event = @{@"target": mapView.reactTag, @"event": @"didTapOverlay", @"key" : key};
+    event[@"key"] = key;
+    event[@"event"] = eventName;
     
     [self.bridge.eventDispatcher sendInputEventWithName:@"topChange" body:event];
 }
