@@ -7,10 +7,6 @@
 
 #import "UIColor+HexString.h"
 
-@interface PPTMarker : GMSMarker
-@property (nonatomic) NSString *key;
-@end
-
 @implementation PPTMarker
 
 + (instancetype)markerWithPosition:(CLLocationCoordinate2D)position
@@ -23,9 +19,6 @@
 }
 @end
 
-@interface PPTCircle : GMSCircle
-@property (nonatomic) NSString *key;
-@end
 
 @implementation PPTCircle
 
@@ -39,10 +32,6 @@
     circle.key = key;
     return circle;
 }
-@end
-
-@interface PPTPolygon : GMSPolygon
-@property (nonatomic) NSString *key;
 @end
 
 @implementation PPTPolygon

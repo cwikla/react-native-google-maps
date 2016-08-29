@@ -147,7 +147,7 @@ RCT_EXPORT_VIEW_PROPERTY(polygons, NSDictionaryArray)
  *
  * @return BOOL
  */
-- (BOOL)mapView:(GMSMapView *)mapView didTapMarker:(GMSMarker *)marker
+- (BOOL)mapView:(GMSMapView *)mapView didTapMarker:(PPTMarker *)marker
 {
     CLLocationCoordinate2D thing = marker.position;
     
@@ -157,8 +157,8 @@ RCT_EXPORT_VIEW_PROPERTY(polygons, NSDictionaryArray)
   NSDictionary *event = @{
                           @"target": mapView.reactTag,
                           @"event": @"didTapMarker",
+                          @"key": marker.key ? marker.key : [NSNull null],
                           @"data": @{
-                                  @"publicId": (marker.userData ? marker.userData : [NSNull null]),
                               @"latitude": [[NSNumber alloc] initWithDouble:marker.position.latitude],
                               @"longitude": [[NSNumber alloc] initWithDouble:marker.position.longitude]
                               }
@@ -175,9 +175,21 @@ RCT_EXPORT_VIEW_PROPERTY(polygons, NSDictionaryArray)
  */
 - (void)mapView:(GMSMapView *)mapView didTapOverlay:(GMSOverlay *)overlay
 {
-  NSDictionary *event = @{@"target": mapView.reactTag, @"event": @"didTapOverlay"};
-  
-  [self.bridge.eventDispatcher sendInputEventWithName:@"topChange" body:event];
+    NSString *key = [NSNull null];
+    
+    if ([overlay isKindOfClass:[PPTPolygon class]]) {
+        key = ((PPTPolygon *)overlay).key;
+    }
+    else if ([overlay isKindOfClass:[PPTCircle class]]) {
+        key = ((PPTCircle *)overlay).key;
+    }
+    else if ([overlay isKindOfClass:[PPTMarker class]]) {
+        key = ((PPTMarker *)overlay).key;
+    }
+    
+    NSDictionary *event = @{@"target": mapView.reactTag, @"event": @"didTapOverlay", @"key" : key};
+    
+    [self.bridge.eventDispatcher sendInputEventWithName:@"topChange" body:event];
 }
 
 /**
@@ -185,13 +197,13 @@ RCT_EXPORT_VIEW_PROPERTY(polygons, NSDictionaryArray)
  *
  * @return void
  */
-- (void)mapView:(GMSMapView *)mapView didBeginDraggingMarker:(GMSMarker *)marker
+- (void)mapView:(GMSMapView *)mapView didBeginDraggingMarker:(PPTMarker *)marker
 {
   NSDictionary *event = @{
                           @"target": mapView.reactTag,
                           @"event": @"didTapMarker",
+                          @"key": marker.key ? marker.key : [NSNull null],
                           @"data": @{
-                              @"publicId": (marker.userData ? marker.userData : [NSNull null]),
                               @"latitude": [[NSNumber alloc] initWithDouble:marker.position.latitude],
                               @"longitude": [[NSNumber alloc] initWithDouble:marker.position.longitude]
                               }
@@ -205,13 +217,13 @@ RCT_EXPORT_VIEW_PROPERTY(polygons, NSDictionaryArray)
  *
  * @return void
  */
-- (void)mapView:(GMSMapView *)mapView didEndDraggingMarker:(GMSMarker *)marker
+- (void)mapView:(GMSMapView *)mapView didEndDraggingMarker:(PPTMarker *)marker
 {
   NSDictionary *event = @{
                           @"target": mapView.reactTag,
                           @"event": @"didTapMarker",
+                          @"key": marker.key ? marker.key : [NSNull null],
                           @"data": @{
-                              @"publicId": (marker.userData ? marker.userData : [NSNull null]),
                               @"latitude": [[NSNumber alloc] initWithDouble:marker.position.latitude],
                               @"longitude": [[NSNumber alloc] initWithDouble:marker.position.longitude]
                               }
@@ -225,13 +237,13 @@ RCT_EXPORT_VIEW_PROPERTY(polygons, NSDictionaryArray)
  *
  * @return void
  */
-- (void)mapView:(GMSMapView *)mapView didDragMarker:(GMSMarker *)marker
+- (void)mapView:(GMSMapView *)mapView didDragMarker:(PPTMarker *)marker
 {
   NSDictionary *event = @{
                           @"target": mapView.reactTag,
                           @"event": @"didTapMarker",
+                          @"key": marker.key ? marker.key : [NSNull null],
                           @"data": @{
-                              @"publicId": (marker.userData ? marker.userData : [NSNull null]),
                               @"latitude": [[NSNumber alloc] initWithDouble:marker.position.latitude],
                               @"longitude": [[NSNumber alloc] initWithDouble:marker.position.longitude]
                               }

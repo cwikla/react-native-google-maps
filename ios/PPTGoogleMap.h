@@ -1,6 +1,22 @@
 #import <GoogleMaps/GoogleMaps.h>
 #import <CoreLocation/CoreLocation.h>
 
+
+@interface PPTMarker : GMSMarker
+@property (nonatomic) NSString *key;
+@end
+
+@interface PPTCircle : GMSCircle
+@property (nonatomic) NSString *key;
+@end
+
+@interface PPTPolygon : GMSPolygon
+@property (nonatomic) NSString *key;
+@end
+
+
+
+
 @class RCTEventDispatcher;
 
 /**
