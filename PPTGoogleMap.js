@@ -283,7 +283,7 @@ MapView.propTypes = {
     accessibilityComponentType: React.PropTypes.string,
     importantForAccessibility: React.PropTypes.string,
     accessibilityLabel: React.PropTypes.string,
-    onLayout: React.PropTypes.bool,
+    onLayout: React.PropTypes.func,
     testID: React.PropTypes.string
 };
 
