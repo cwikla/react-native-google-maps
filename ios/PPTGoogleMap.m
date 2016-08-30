@@ -52,7 +52,6 @@
     NSMutableDictionary *circles;
     NSMutableDictionary *polygons;
     CLLocationManager *locationManager;
-    float zoom;
 }
 
 /**
@@ -96,7 +95,7 @@
  */
 - (void)setCameraPosition:(NSDictionary *)cameraPosition
 {
-    zoom = ((NSNumber*)cameraPosition[@"zoom"]).doubleValue;
+    float zoom = ((NSNumber*)cameraPosition[@"zoom"]).doubleValue;
     
     if (cameraPosition[@"auto"]) {
         locationManager = [[CLLocationManager alloc] init];
@@ -106,15 +105,51 @@
         locationManager.desiredAccuracy = kCLLocationAccuracyBest;
         
         [locationManager startUpdatingLocation];
-    } else {
+    }
+    else {
         CLLocationDegrees latitude = ((NSNumber*)cameraPosition[@"latitude"]).doubleValue;
         CLLocationDegrees longitude = ((NSNumber*)cameraPosition[@"longitude"]).doubleValue;
         
-        GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:latitude
+        if (!self.camera) {
+            GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:latitude
                                                                 longitude:longitude
                                                                      zoom:zoom];
         
-        [self setCamera: camera];
+            self.camera = camera;
+        }
+        
+        CLLocationCoordinate2D coords = CLLocationCoordinate2DMake(latitude, longitude);
+        [self moveCamera:[GMSCameraUpdate setTarget:coords zoom:zoom]];
+
+        
+#if 0   
+        // FOR THE LIFE OF ME I CANNOT GET fitBounds to work!
+        if (cameraPosition[@"bounds"] != [NSNull null]) {
+            NSDictionary *bounds = cameraPosition[@"bounds"];
+            NSDictionary *northEast = bounds[@"northeast"];
+            NSDictionary *southWest = bounds[@"southwest"];
+            
+            CLLocationDegrees neLat = ((NSNumber*)northEast[@"lat"]).doubleValue;
+            CLLocationDegrees neLng = ((NSNumber*)northEast[@"lng"]).doubleValue;
+            
+            CLLocationDegrees swLat = ((NSNumber*)southWest[@"lat"]).doubleValue;
+            CLLocationDegrees swLng = ((NSNumber*)southWest[@"lng"]).doubleValue;
+            
+            CLLocationCoordinate2D northEast2D = CLLocationCoordinate2DMake(neLat, neLng);
+            CLLocationCoordinate2D southWest2D = CLLocationCoordinate2DMake(swLat, swLng);
+            CLLocationCoordinate2D northWest2D = CLLocationCoordinate2DMake(neLat, swLng);
+            CLLocationCoordinate2D southEast2D = CLLocationCoordinate2DMake(swLat, neLng);
+            
+            GMSCoordinateBounds *fit = [[GMSCoordinateBounds alloc] initWithCoordinate:northEast2D coordinate:southWest2D];
+            
+            [self moveCamera:[GMSCameraUpdate fitBounds:fit]];
+            
+            bob = self.camera.zoom;
+        }
+        else
+        {
+        }
+#endif
     }
 }
 
@@ -127,7 +162,7 @@
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
     GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:newLocation.coordinate.latitude
                                                             longitude:newLocation.coordinate.longitude
-                                                                 zoom:zoom];
+                                                                 zoom:self.camera.zoom];
     
     
     [self setCamera: camera];
