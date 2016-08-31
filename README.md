@@ -1,3 +1,5 @@
+*** NOTE **** If you found this somehow - this README isn't up to date. I've added/fixed a bunch of stuff, all ios for now. Android will be done afterward once I have what I need.  Please see commits to see what's going on.
+
 # React Native Mapping Integration
 
 This package provides a React Native compatible, Google Maps UI component which runs on iOS and Android using the same
