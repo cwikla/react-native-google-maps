@@ -269,11 +269,20 @@ RCT_EXPORT_VIEW_PROPERTY(polygons, NSDictionaryArray)
  */
 - (BOOL)didTapMyLocationButtonForMapView:(GMSMapView *)mapView
 {
-  NSDictionary *event = @{@"target": mapView.reactTag, @"event": @"didTapMyLocationButtonForMapView"};
-  
-  [self.bridge.eventDispatcher sendInputEventWithName:@"topChange" body:event];
-  
-  return NO;
+    CLLocationCoordinate2D location = [mapView.camera target];
+    
+    NSDictionary *event = @{@"target": mapView.reactTag,
+                            @"event": @"didTapMyLocationButtonForMapView",
+                            @"data": @{
+                                @"latitude": [[NSNumber alloc] initWithDouble:location.latitude],
+                                @"longitude": [[NSNumber alloc] initWithDouble:location.longitude]
+                                }
+                            };
+    
+    
+    [self.bridge.eventDispatcher sendInputEventWithName:@"topChange" body:event];
+    
+    return NO;
 }
 
 @end
