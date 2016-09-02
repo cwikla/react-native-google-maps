@@ -28,7 +28,6 @@
 /* Begin PBXFileReference section */
 		0CAA8FF71BFB74B7005A91B8 /* PPTGoogleMapProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPTGoogleMapProvider.h; sourceTree = "<group>"; };
 		0CAA8FF81BFB74B7005A91B8 /* PPTGoogleMapProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPTGoogleMapProvider.m; sourceTree = "<group>"; };
-		0CAA91351BFB7E21005A91B8 /* GoogleMapsApi.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = GoogleMapsApi.plist; sourceTree = "<group>"; };
 		0CAA91381BFB8086005A91B8 /* PPTGoogleMapManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPTGoogleMapManager.h; sourceTree = "<group>"; };
 		0CAA91391BFB8086005A91B8 /* PPTGoogleMapManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPTGoogleMapManager.m; sourceTree = "<group>"; };
 		0CAA913A1BFB8086005A91B8 /* PPTGoogleMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPTGoogleMap.h; sourceTree = "<group>"; };
@@ -62,7 +61,6 @@
 			children = (
 				55DC02A31D72519A00AEA847 /* UIColor+HexString.h */,
 				55DC02A41D72519A00AEA847 /* UIColor+HexString.m */,
-				0CAA91351BFB7E21005A91B8 /* GoogleMapsApi.plist */,
 				0CAA913A1BFB8086005A91B8 /* PPTGoogleMap.h */,
 				0CAA913B1BFB8086005A91B8 /* PPTGoogleMap.m */,
 				0CAA91381BFB8086005A91B8 /* PPTGoogleMapManager.h */,
