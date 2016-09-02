@@ -3,11 +3,9 @@
 @interface PPTGoogleMapProvider : NSObject
 
 /**
- * Sets the google maps API key without having to include the Google Maps iOS SDK in the main
- * React project.
- *
+ * Sets the google maps API key
  * @return BOOL
  */
-+ (BOOL)provideAPIKey;
++ (BOOL)provideAPIKey:(NSString *)apiKey;
 
 @end

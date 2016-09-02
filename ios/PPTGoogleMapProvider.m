@@ -11,15 +11,8 @@
  *
  * @return BOOL
  */
-+ (BOOL)provideAPIKey{
-    NSDictionary *dictionary = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"GoogleMapsApi" ofType:@"plist"]];
-    NSString * ApiKey = dictionary[@"API Key"];
-    
-    if (ApiKey) {
-        return [GMSServices provideAPIKey:ApiKey];
-    }
-    
-    return NO;
++ (BOOL)provideAPIKey:(NSString *)apiKey {
+    return [GMSServices provideAPIKey:apiKey];
 }
 
 @end
