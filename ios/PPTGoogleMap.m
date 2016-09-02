@@ -19,17 +19,64 @@
 }
 @end
 
+// http://stackoverflow.com/questions/23016992/change-gmscircle-radius-with-animation
 
 @implementation PPTCircle
+{
+    CLLocationDistance _from;
+    CLLocationDistance _to;
+    NSTimeInterval _duration;
+}
+
+// just call this
+-(void)beginRadiusAnimationFrom:(CLLocationDistance)from
+                             to:(CLLocationDistance)to
+                       duration:(NSTimeInterval)duration
+                completeHandler:(void(^)())completeHandler {
+    
+    self.handler = completeHandler;
+    self.begin = [NSDate date];
+    _from = from;
+    _to = to;
+    _duration = duration;
+    
+    [self performSelectorOnMainThread:@selector(updateSelf) withObject:nil waitUntilDone:NO];
+}
+
+// internal update
+-(void)updateSelf {
+    
+    NSTimeInterval i = [[NSDate date] timeIntervalSinceDate:_begin];
+    if (i >= _duration) {
+        CLLocationDistance tmp = _to;
+        _to = _from;
+        _from = tmp;
+        _begin = [NSDate date];
+    }
+    
+    CLLocationDistance d = (_to - _from) * i / _duration + _from;
+    if (d < 0.1) {
+        d = 0.1;
+    }
+    self.radius = d;
+    // do it again at next run loop
+    [self performSelectorOnMainThread:@selector(updateSelf) withObject:nil waitUntilDone:NO];
+}
+
 
 + (instancetype)circleWithPosition:(CLLocationCoordinate2D)position
                             radius:(CLLocationDistance)radius
                             andKey:(NSString *)key
+                  andAnimationTime:(NSNumber *)animationTime
 {
     PPTCircle *circle = [[PPTCircle alloc] init];
     circle.position = position;
     circle.radius = radius;
     circle.key = key;
+    
+    if (animationTime) {
+        [circle beginRadiusAnimationFrom:0.1 to:radius duration:animationTime.doubleValue completeHandler:nil];
+    }
     return circle;
 }
 @end
@@ -119,7 +166,8 @@
         }
         
         CLLocationCoordinate2D coords = CLLocationCoordinate2DMake(latitude, longitude);
-        [self moveCamera:[GMSCameraUpdate setTarget:coords zoom:zoom]];
+        [self animateWithCameraUpdate:[GMSCameraUpdate setTarget:coords zoom:zoom]];
+//        [self moveCamera:[GMSCameraUpdate setTarget:coords zoom:zoom]];
 
         
 #if 0   
@@ -142,7 +190,7 @@
             
             GMSCoordinateBounds *fit = [[GMSCoordinateBounds alloc] initWithCoordinate:northEast2D coordinate:southWest2D];
             
-            [self moveCamera:[GMSCameraUpdate fitBounds:fit]];
+            [self animateToCameraUpdate:[GMSCameraUpdate fitBounds:fit]];
             
             bob = self.camera.zoom;
         }
@@ -184,10 +232,11 @@
         CLLocationDegrees latitude = ((NSNumber*)circle[@"latitude"]).doubleValue;
         CLLocationDegrees longitude = ((NSNumber*)circle[@"longitude"]).doubleValue;
         CLLocationDistance radius = ((NSNumber*)circle[@"radius"]).doubleValue;
+        NSNumber *animationTime = circle[@"animationTime"];
         
         PPTCircle *mapCircle = circles[key];
         if (!mapCircle) {
-            mapCircle = [PPTCircle circleWithPosition:CLLocationCoordinate2DMake(latitude, longitude) radius:radius andKey:key];
+            mapCircle = [PPTCircle circleWithPosition:CLLocationCoordinate2DMake(latitude, longitude) radius:radius andKey:key andAnimationTime:animationTime];
         }
         
         if (circle[@"strokeColor"]) {

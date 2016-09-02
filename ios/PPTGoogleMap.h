@@ -8,6 +8,9 @@
 
 @interface PPTCircle : GMSCircle
 @property (nonatomic) NSString *key;
+
+@property (nonatomic, copy) void(^handler)();
+@property (nonatomic, strong) NSDate * begin;
 @end
 
 @interface PPTPolygon : GMSPolygon
