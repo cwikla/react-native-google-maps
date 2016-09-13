@@ -118,6 +118,7 @@
     return self;
 }
 
+
 /**
  * Enables layout sub-views which are required to render a non-blank map.
  *
