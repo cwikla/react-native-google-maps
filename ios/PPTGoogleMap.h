@@ -18,8 +18,6 @@
 @end
 
 
-
-
 @class RCTEventDispatcher;
 
 /**
@@ -41,3 +39,9 @@
 @property (nonatomic) NSMutableDictionary *overlays;
 
 @end
+
+@protocol PPTGoogleMapDelegate <GMSMapViewDelegate>
+- (void)digDrag:(PPTGoogleMap *)mapView;
+@end
+
+

@@ -51,12 +51,12 @@ RCT_EXPORT_VIEW_PROPERTY(polygons, NSDictionaryArray)
  *
  * @return void
  */
-- (void)mapView:(GMSMapView *)mapView willMove:(BOOL)gesture
+- (void)mapView:(PPTGoogleMap *)mapView willMove:(BOOL)gesture
 {
     NSString *type = @"animation";
     
     if (gesture) {
-        type = @"gesutre";
+        type = @"gesture";
     }
     
     NSDictionary *event = @{@"target": mapView.reactTag, @"event": @"willMove", @"type": type};
@@ -71,7 +71,7 @@ RCT_EXPORT_VIEW_PROPERTY(polygons, NSDictionaryArray)
  *
  * @return void
  */
-- (void)mapView:(GMSMapView *)mapView didChangeCameraPosition:(GMSCameraPosition *)position
+- (void)mapView:(PPTGoogleMap *)mapView didChangeCameraPosition:(GMSCameraPosition *)position
 {
     
     GMSCoordinateBounds *bounds = [[GMSCoordinateBounds alloc] initWithRegion:mapView.projection.visibleRegion];
@@ -98,7 +98,7 @@ RCT_EXPORT_VIEW_PROPERTY(polygons, NSDictionaryArray)
  *
  * @return void
  */
-- (void)mapView:(GMSMapView *)mapView idleAtCameraPosition:(GMSCameraPosition *)position
+- (void)mapView:(PPTGoogleMap *)mapView idleAtCameraPosition:(GMSCameraPosition *)position
 {
     
     GMSCoordinateBounds *bounds = [[GMSCoordinateBounds alloc] initWithRegion:mapView.projection.visibleRegion];
@@ -126,7 +126,7 @@ RCT_EXPORT_VIEW_PROPERTY(polygons, NSDictionaryArray)
  *
  * @return void
  */
-- (void)mapView:(GMSMapView *)mapView didTapAtCoordinate:(CLLocationCoordinate2D)coordinate
+- (void)mapView:(PPTGoogleMap *)mapView didTapAtCoordinate:(CLLocationCoordinate2D)coordinate
 {
     NSDictionary *event = @{
                             @"target": mapView.reactTag,
@@ -144,7 +144,7 @@ RCT_EXPORT_VIEW_PROPERTY(polygons, NSDictionaryArray)
  *
  * @return void
  */
-- (void)mapView:(GMSMapView *)mapView didLongPressAtCoordinate:(CLLocationCoordinate2D)coordinate
+- (void)mapView:(PPTGoogleMap *)mapView didLongPressAtCoordinate:(CLLocationCoordinate2D)coordinate
 {
     NSDictionary *event = @{
                             @"target": mapView.reactTag,
@@ -163,7 +163,7 @@ RCT_EXPORT_VIEW_PROPERTY(polygons, NSDictionaryArray)
  *
  * @return BOOL
  */
-- (BOOL)mapView:(GMSMapView *)mapView didTapMarker:(PPTMarker *)marker
+- (BOOL)mapView:(PPTGoogleMap *)mapView didTapMarker:(PPTMarker *)marker
 {
     CLLocationCoordinate2D thing = marker.position;
     
@@ -185,7 +185,7 @@ RCT_EXPORT_VIEW_PROPERTY(polygons, NSDictionaryArray)
  *
  * @return void
  */
-- (void)mapView:(GMSMapView *)mapView didTapOverlay:(GMSOverlay *)overlay
+- (void)mapView:(PPTGoogleMap *)mapView didTapOverlay:(GMSOverlay *)overlay
 {
     NSString *key = [NSNull null];
     NSString *eventName = nil;
@@ -217,7 +217,7 @@ RCT_EXPORT_VIEW_PROPERTY(polygons, NSDictionaryArray)
  *
  * @return void
  */
-- (void)mapView:(GMSMapView *)mapView didBeginDraggingMarker:(PPTMarker *)marker
+- (void)mapView:(PPTGoogleMap *)mapView didBeginDraggingMarker:(PPTMarker *)marker
 {
     NSDictionary *event = @{
                             @"target": mapView.reactTag,
@@ -236,7 +236,7 @@ RCT_EXPORT_VIEW_PROPERTY(polygons, NSDictionaryArray)
  *
  * @return void
  */
-- (void)mapView:(GMSMapView *)mapView didEndDraggingMarker:(PPTMarker *)marker
+- (void)mapView:(PPTGoogleMap *)mapView didEndDraggingMarker:(PPTMarker *)marker
 {
     NSDictionary *event = @{
                             @"target": mapView.reactTag,
@@ -255,7 +255,7 @@ RCT_EXPORT_VIEW_PROPERTY(polygons, NSDictionaryArray)
  *
  * @return void
  */
-- (void)mapView:(GMSMapView *)mapView didDragMarker:(PPTMarker *)marker
+- (void)mapView:(PPTGoogleMap *)mapView didDragMarker:(PPTMarker *)marker
 {
     NSDictionary *event = @{
                             @"target": mapView.reactTag,
@@ -276,7 +276,7 @@ RCT_EXPORT_VIEW_PROPERTY(polygons, NSDictionaryArray)
  *
  * @return BOOL
  */
-- (BOOL)didTapMyLocationButtonForMapView:(GMSMapView *)mapView
+- (BOOL)didTapMyLocationButtonForMapView:(PPTGoogleMap *)mapView
 {
     CLLocationCoordinate2D location = mapView.myLocation.coordinate;
     
@@ -293,10 +293,21 @@ RCT_EXPORT_VIEW_PROPERTY(polygons, NSDictionaryArray)
     return NO;
 }
 
+- (void)didDrag:(PPTGoogleMap *)mapView {
+    NSDictionary *event = @{@"target": mapView.reactTag,
+                            @"event": @"didDrag",
+                            };
+    
+    
+    [self.bridge.eventDispatcher sendInputEventWithName:@"topChange" body:event];
+
+}
+
+
 RCT_EXPORT_METHOD(bounds:(NSNumber *)reactTag callback:(RCTResponseSenderBlock)callback)
 {
     [self.bridge.uiManager addUIBlock:^(RCTUIManager *uiManager, NSDictionary *viewRegistry) {
-        GMSMapView *view = viewRegistry[reactTag];
+        PPTGoogleMap *view = viewRegistry[reactTag];
         if ([view isKindOfClass:[GMSMapView class]]) {
             GMSCoordinateBounds *bounds = [[GMSCoordinateBounds alloc] initWithRegion:view.projection.visibleRegion];
             

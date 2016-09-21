@@ -113,11 +113,36 @@
         markers = [[NSMutableDictionary alloc] init];
         circles = [[NSMutableDictionary alloc] init];
         polygons = [[NSMutableDictionary alloc] init];
+        locationManager = [[CLLocationManager alloc] init];
+        locationManager.delegate = self;
+        locationManager.distanceFilter = kCLDistanceFilterNone;
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     }
+    
+    for (UIGestureRecognizer *gestureRecognizer in self.gestureRecognizers) {
+        [gestureRecognizer addTarget:self action:@selector(recognizeMapDrag:)];
+    }
+    
+
     
     return self;
 }
 
+
+-(IBAction) recognizeMapDrag:(UIPanGestureRecognizer*)sender {
+    
+    SEL sel = @selector(didDrag:);
+    
+    if (self.delegate && [self.delegate respondsToSelector:sel]) {
+        [self.delegate performSelector:sel withObject:self];
+    }
+}
+
+- (void)dealloc {
+    if (locationManager) {
+        [locationManager stopUpdatingLocation];
+    }
+}
 
 /**
  * Enables layout sub-views which are required to render a non-blank map.
@@ -146,15 +171,14 @@
     float zoom = ((NSNumber*)cameraPosition[@"zoom"]).doubleValue;
     
     if (cameraPosition[@"auto"]) {
-        locationManager = [[CLLocationManager alloc] init];
-        
-        locationManager.delegate = self;
-        locationManager.distanceFilter = kCLDistanceFilterNone;
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest;
         
         [locationManager startUpdatingLocation];
     }
     else {
+        if (locationManager) {
+            [locationManager stopUpdatingLocation];
+        }
+        
         CLLocationDegrees latitude = ((NSNumber*)cameraPosition[@"latitude"]).doubleValue;
         CLLocationDegrees longitude = ((NSNumber*)cameraPosition[@"longitude"]).doubleValue;
         
@@ -208,15 +232,12 @@
  *
  * @return void
  */
-- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
-    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:newLocation.coordinate.latitude
-                                                            longitude:newLocation.coordinate.longitude
-                                                                 zoom:self.camera.zoom];
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(nonnull NSArray<CLLocation *> *)locations {
+    CLLocation* location = [locations lastObject];
+   
+    [self animateWithCameraUpdate:[GMSCameraUpdate setTarget:location.coordinate zoom:self.camera.zoom]];
     
-    
-    [self setCamera: camera];
-    
-    [locationManager stopUpdatingLocation];
+    //[locationManager stopUpdatingLocation];
 }
 
 /**
