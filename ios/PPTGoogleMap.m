@@ -239,6 +239,14 @@
         if (!mapCircle) {
             mapCircle = [PPTCircle circleWithPosition:CLLocationCoordinate2DMake(latitude, longitude) radius:radius andKey:key andAnimationTime:animationTime];
         }
+        CLLocationCoordinate2D newPosition = CLLocationCoordinate2DMake(mapCircle.position.latitude, mapCircle.position.longitude);
+        if (circle[@"latitude"]) {
+            newPosition.latitude = latitude;
+        }
+        if (circle[@"longitude"]) {
+            newPosition.longitude = longitude;
+        }
+        mapCircle.position = newPosition;
         
         if (circle[@"strokeColor"]) {
             mapCircle.strokeColor = [self getColor:circle[@"strokeColor"]];
