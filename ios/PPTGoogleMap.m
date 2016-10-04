@@ -117,6 +117,7 @@
         locationManager.delegate = self;
         locationManager.distanceFilter = kCLDistanceFilterNone;
         locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+        self.zoom = 10;
     }
     
     for (UIGestureRecognizer *gestureRecognizer in self.gestureRecognizers) {
@@ -168,30 +169,28 @@
  */
 - (void)setCameraPosition:(NSDictionary *)cameraPosition
 {
-    float zoom = ((NSNumber*)cameraPosition[@"zoom"]).doubleValue;
+    if (cameraPosition[@"zoom"]) {
+        self.zoom = ((NSNumber*)cameraPosition[@"zoom"]).doubleValue;
+    }
     
-    if (cameraPosition[@"auto"]) {
-        
+    if (cameraPosition[@"auto"]  && ((NSNumber*)cameraPosition[@"auto"]).boolValue == true) {
         [locationManager startUpdatingLocation];
     }
     else {
         if (locationManager) {
             [locationManager stopUpdatingLocation];
         }
-        
         CLLocationDegrees latitude = ((NSNumber*)cameraPosition[@"latitude"]).doubleValue;
         CLLocationDegrees longitude = ((NSNumber*)cameraPosition[@"longitude"]).doubleValue;
         
-        if (!self.camera) {
-            GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:latitude
+        GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:latitude
                                                                 longitude:longitude
-                                                                     zoom:zoom];
+                                                                     zoom:self.zoom];
         
-            self.camera = camera;
-        }
+        self.camera = camera;
         
         CLLocationCoordinate2D coords = CLLocationCoordinate2DMake(latitude, longitude);
-        [self animateWithCameraUpdate:[GMSCameraUpdate setTarget:coords zoom:zoom]];
+        [self animateWithCameraUpdate:[GMSCameraUpdate setTarget:coords zoom:self.zoom]];
 //        [self moveCamera:[GMSCameraUpdate setTarget:coords zoom:zoom]];
 
         
@@ -235,7 +234,7 @@
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(nonnull NSArray<CLLocation *> *)locations {
     CLLocation* location = [locations lastObject];
    
-    [self animateWithCameraUpdate:[GMSCameraUpdate setTarget:location.coordinate zoom:self.camera.zoom]];
+    [self animateWithCameraUpdate:[GMSCameraUpdate setTarget:location.coordinate zoom:self.zoom]];
     
     //[locationManager stopUpdatingLocation];
 }

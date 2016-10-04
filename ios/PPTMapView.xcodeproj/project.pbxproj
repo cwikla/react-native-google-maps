@@ -10,6 +10,7 @@
 		0CAA8FF91BFB74B7005A91B8 /* PPTGoogleMapProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CAA8FF81BFB74B7005A91B8 /* PPTGoogleMapProvider.m */; };
 		0CAA913C1BFB8086005A91B8 /* PPTGoogleMapManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CAA91391BFB8086005A91B8 /* PPTGoogleMapManager.m */; };
 		0CAA913D1BFB8086005A91B8 /* PPTGoogleMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CAA913B1BFB8086005A91B8 /* PPTGoogleMap.m */; };
+		5597FF181DA325B5007F2D2A /* PPTGooglePlacePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 5597FF171DA325B5007F2D2A /* PPTGooglePlacePicker.m */; };
 		55DC02A51D72519A00AEA847 /* UIColor+HexString.m in Sources */ = {isa = PBXBuildFile; fileRef = 55DC02A41D72519A00AEA847 /* UIColor+HexString.m */; };
 		5D9642BACE7DC2267DA0ECB2 /* Pods_PPTMapView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A69FBAD01C1535D46AFB701B /* Pods_PPTMapView.framework */; };
 /* End PBXBuildFile section */
@@ -35,6 +36,8 @@
 		0CAA913B1BFB8086005A91B8 /* PPTGoogleMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPTGoogleMap.m; sourceTree = "<group>"; };
 		134814201AA4EA6300B7C361 /* libPPTMapView.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPPTMapView.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		23EB8C083093327BD62E3711 /* Pods-PPTMapView.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PPTMapView.release.xcconfig"; path = "Pods/Target Support Files/Pods-PPTMapView/Pods-PPTMapView.release.xcconfig"; sourceTree = "<group>"; };
+		5597FF161DA325B5007F2D2A /* PPTGooglePlacePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPTGooglePlacePicker.h; sourceTree = "<group>"; };
+		5597FF171DA325B5007F2D2A /* PPTGooglePlacePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPTGooglePlacePicker.m; sourceTree = "<group>"; };
 		55DC02A31D72519A00AEA847 /* UIColor+HexString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+HexString.h"; sourceTree = "<group>"; };
 		55DC02A41D72519A00AEA847 /* UIColor+HexString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+HexString.m"; sourceTree = "<group>"; };
 		A69FBAD01C1535D46AFB701B /* Pods_PPTMapView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PPTMapView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -64,6 +67,8 @@
 		58B511D21A9E6C8500147676 = {
 			isa = PBXGroup;
 			children = (
+				5597FF161DA325B5007F2D2A /* PPTGooglePlacePicker.h */,
+				5597FF171DA325B5007F2D2A /* PPTGooglePlacePicker.m */,
 				55DC02A31D72519A00AEA847 /* UIColor+HexString.h */,
 				55DC02A41D72519A00AEA847 /* UIColor+HexString.m */,
 				0CAA913A1BFB8086005A91B8 /* PPTGoogleMap.h */,
@@ -221,6 +226,7 @@
 			files = (
 				0CAA913C1BFB8086005A91B8 /* PPTGoogleMapManager.m in Sources */,
 				0CAA8FF91BFB74B7005A91B8 /* PPTGoogleMapProvider.m in Sources */,
+				5597FF181DA325B5007F2D2A /* PPTGooglePlacePicker.m in Sources */,
 				55DC02A51D72519A00AEA847 /* UIColor+HexString.m in Sources */,
 				0CAA913D1BFB8086005A91B8 /* PPTGoogleMap.m in Sources */,
 			);

@@ -5,9 +5,12 @@ import { requireNativeComponent } from 'react-native';
 import resolveAssetSource from 'react-native/Libraries/Image/resolveAssetSource';
 
 import { NativeModules } from 'react-native';
-var PPTGoogleMapManager = NativeModules.PPTGoogleMapManager;
+const { PPTGoogleMapManager, PPTGooglePlacePicker } = NativeModules.PPTGoogleMapManager;
 
-class MapView extends Component {
+console.log("HELLO PPT " + JSON.stringify(PPTGoogleMapManager);
+console.log("HELLO PPT " + JSON.stringify(PPTGooglePlacePicker);
+
+export default class MapView extends Component {
     /**
      * Any metadata that's associated with map markers.
      *
@@ -287,10 +290,10 @@ MapView.propTypes = {
     testID: React.PropTypes.string
 };
 
-var PPTGoogleMap = requireNativeComponent('PPTGoogleMap', MapView, {
+const PPTGoogleMap = requireNativeComponent('PPTGoogleMap', MapView, {
     nativeOnly: {
         onChange: true
     }
 });
 
-module.exports = MapView;
+module.exports = { PPTGooglePlacePicker} ;

@@ -37,6 +37,7 @@
 @property (nonatomic) BOOL *indoorPicker;
 @property (nonatomic) BOOL *allowScrollGesturesDuringRotateOrZoom;
 @property (nonatomic) NSMutableDictionary *overlays;
+@property (nonatomic) float zoom;
 
 @end
 
