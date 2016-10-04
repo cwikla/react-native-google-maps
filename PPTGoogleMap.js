@@ -5,10 +5,8 @@ import { requireNativeComponent } from 'react-native';
 import resolveAssetSource from 'react-native/Libraries/Image/resolveAssetSource';
 
 import { NativeModules } from 'react-native';
-const { PPTGoogleMapManager, PPTGooglePlacePicker } = NativeModules.PPTGoogleMapManager;
-
-console.log("HELLO PPT " + JSON.stringify(PPTGoogleMapManager);
-console.log("HELLO PPT " + JSON.stringify(PPTGooglePlacePicker);
+const  PPTGoogleMapManager = NativeModules.PPTGoogleMapManager;
+const  PPTGooglePlacePicker = NativeModules.PPTGooglePlacePicker;
 
 export default class MapView extends Component {
     /**
@@ -296,4 +294,6 @@ const PPTGoogleMap = requireNativeComponent('PPTGoogleMap', MapView, {
     }
 });
 
-module.exports = { PPTGooglePlacePicker} ;
+const GooglePlacePicker = PPTGooglePlacePicker;
+
+module.exports = { GooglePlacePicker} ;

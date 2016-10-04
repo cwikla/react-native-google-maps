@@ -42,7 +42,7 @@ RCT_EXPORT_METHOD(show:
                                                   },
                                            @"southWest" :
                                                @{@"latitude" : @(place.viewport.southWest.latitude),
-                                                 @"longitude" : @(place.viewport.southWest.latitude)
+                                                 @"longitude" : @(place.viewport.southWest.longitude)
                                                  }
                                            };
                 [response setObject:viewport forKey:@"viewport"];

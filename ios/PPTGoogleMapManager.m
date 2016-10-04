@@ -7,8 +7,7 @@
 #import "UIView+React.h"
 
 
-#define DTONUM(a) [[NSNumber alloc] initWithDouble:(a)]
-#define COORDTODICT(a) @{@"latitude" : DTONUM((a).latitude), @"longitude" : DTONUM((a).longitude)}
+#define COORDTODICT(a) @{@"latitude" : @((a).latitude), @"longitude" : @((a).longitude)}
 
 @implementation PPTGoogleMapManager
 
@@ -85,7 +84,7 @@ RCT_EXPORT_VIEW_PROPERTY(polygons, NSDictionaryArray)
                             @"data": @{
                                     @"coord" : COORDTODICT(position.target),
                                     @"bounds" : dictBounds,
-                                    @"zoom": DTONUM(position.zoom)
+                                    @"zoom": @(position.zoom)
                                     }
                             };
     
@@ -113,7 +112,7 @@ RCT_EXPORT_VIEW_PROPERTY(polygons, NSDictionaryArray)
                             @"data": @{
                                     @"bounds" : dictBounds,
                                     @"coord" : COORDTODICT(position.target),
-                                    @"zoom": DTONUM(position.zoom)
+                                    @"zoom": @(position.zoom)
                                     }
                             };
     
