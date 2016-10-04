@@ -294,6 +294,4 @@ const PPTGoogleMap = requireNativeComponent('PPTGoogleMap', MapView, {
     }
 });
 
-const GooglePlacePicker = PPTGooglePlacePicker;
-
-module.exports = { GooglePlacePicker} ;
+exports.GooglePlacePicker = PPTGooglePlacePicker;
