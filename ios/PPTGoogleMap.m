@@ -129,6 +129,10 @@
     return self;
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    int i = 1;
+}
+
 
 -(IBAction) recognizeMapDrag:(UIPanGestureRecognizer*)sender {
     
@@ -176,27 +180,7 @@
     if (cameraPosition[@"auto"]  && ((NSNumber*)cameraPosition[@"auto"]).boolValue == true) {
         [locationManager startUpdatingLocation];
     }
-    else
-    if (cameraPosition[@"fitBounds"]) {
-            NSArray *points = cameraPosition[@"fitBounds"];
-            
-            
-            GMSCoordinateBounds *fit = [[GMSCoordinateBounds alloc] init];
-            
-            for(NSDictionary *d in points) {
-                CLLocationDegrees latitude = ((NSNumber*)d[@"latitude"]).doubleValue;
-                CLLocationDegrees longitude = ((NSNumber*)d[@"longitude"]).doubleValue;
-                fit = [fit includingCoordinate:CLLocationCoordinate2DMake(latitude, longitude)];
-            }
-            
-            GMSCameraUpdate *update = [GMSCameraUpdate fitBounds:fit];
-            [self animateWithCameraUpdate:update];
-            [self animateToViewingAngle:50];
-    }
     else {
-        if (locationManager) {
-            [locationManager stopUpdatingLocation];
-        }
         CLLocationDegrees latitude = ((NSNumber*)cameraPosition[@"latitude"]).doubleValue;
         CLLocationDegrees longitude = ((NSNumber*)cameraPosition[@"longitude"]).doubleValue;
         

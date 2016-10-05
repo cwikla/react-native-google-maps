@@ -1,10 +1,16 @@
 'use strict';
 
-import React, { Component } from 'react';
-import { requireNativeComponent } from 'react-native';
+import React, { 
+	Component 
+} from 'react';
+
+import { 
+	NativeModules,
+	requireNativeComponent,
+	findNodeHandle
+} from 'react-native';
 import resolveAssetSource from 'react-native/Libraries/Image/resolveAssetSource';
 
-import { NativeModules } from 'react-native';
 const  PPTGoogleMapManager = NativeModules.PPTGoogleMapManager;
 const  PPTGooglePlacePicker = NativeModules.PPTGooglePlacePicker;
 
@@ -84,7 +90,6 @@ export default class MapView extends Component {
     }
 
 		componentWillUpdate(nextProps: Object, nextState: Object) {
-			//PPTGoogleMapManager.clear(this);
 		}
 
     /**
@@ -114,6 +119,10 @@ export default class MapView extends Component {
 
             this._markerMeta[marker.id] = marker.meta || {};
         });
+    }
+
+		fitToPoints(points) {
+      PPTGoogleMapManager.fitToPoints(findNodeHandle(this), points);
     }
 
     /**

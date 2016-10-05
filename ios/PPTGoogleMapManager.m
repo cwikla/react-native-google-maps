@@ -316,6 +316,32 @@ RCT_EXPORT_METHOD(bounds:(NSNumber *)reactTag callback:(RCTResponseSenderBlock)c
     }];
 }
 
+RCT_EXPORT_METHOD(fitToPoints:(nonnull NSNumber *)reactTag
+                  points:(NSArray *)points)
+{
+    [self.bridge.uiManager addUIBlock:^(__unused RCTUIManager *uiManager, NSDictionary<NSNumber *, UIView *> *viewRegistry) {
+        id view = viewRegistry[reactTag];
+        if (![view isKindOfClass:[PPTGoogleMap class]]) {
+            RCTLogError(@"Invalid view returned from registry, expecting AIRGoogleMap, got: %@", view);
+        } else {
+            PPTGoogleMap *mapView = (PPTGoogleMap *)view;
+            GMSCoordinateBounds *fit = [[GMSCoordinateBounds alloc] init];
+            
+            for(NSDictionary *d in points) {
+                CLLocationDegrees latitude = ((NSNumber*)d[@"latitude"]).doubleValue;
+                CLLocationDegrees longitude = ((NSNumber*)d[@"longitude"]).doubleValue;
+                fit = [fit includingCoordinate:CLLocationCoordinate2DMake(latitude, longitude)];
+                
+            }
+            
+            GMSCameraUpdate *update = [GMSCameraUpdate fitBounds:fit];
+
+            [mapView animateWithCameraUpdate:update];
+        }
+    }];
+}
+
+
 
 
 @end
