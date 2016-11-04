@@ -17,6 +17,7 @@
     marker.position = position;
     return marker;
 }
+
 @end
 
 // http://stackoverflow.com/questions/23016992/change-gmscircle-radius-with-animation
@@ -336,13 +337,30 @@
         if (!mapMarker) {
             mapMarker = [PPTMarker markerWithPosition:CLLocationCoordinate2DMake(latitude, longitude) andKey:key];
         }
+        mapMarker.position = CLLocationCoordinate2DMake(latitude, longitude);
+        mapMarker.title = marker[@"title"] ? marker[@"title"] : nil;
         
         if (marker[@"icon"]) {
-            mapMarker.icon = [self getMarkerImage:marker];
+            UIImage *icon = [self getMarkerImage:marker];
+            if (!marker[@"round"]) {
+                mapMarker.icon = icon;
+            }
+            else {
+                UIImageView *iconView = [[UIImageView alloc] initWithImage:icon];
+                iconView.layer.cornerRadius = iconView.bounds.size.width / 2;
+                iconView.clipsToBounds = true;
+                iconView.layer.borderWidth = marker[@"borderWidth"] ? ((NSNumber*)marker[@"borderWidth"]).intValue  : 0.0;
+                iconView.layer.borderColor = (marker[@"fillColor"] ? [self getColor:marker[@"fillColor"]] : [UIColor blackColor]).CGColor;
+                
+                mapMarker.iconView = iconView;
+            }
             
         } else if (marker[@"fillColor"]) {
             UIColor *color = [self getColor:marker[@"fillColor"]];
             mapMarker.icon = [GMSMarker markerImageWithColor:color];
+        }
+        else {
+            mapMarker.icon = nil;
         }
         
         mapMarker.map = self;
@@ -384,17 +402,55 @@
  *
  * @return NSImage
  */
+
+- (UIImage *)image:(UIImage*)originalImage scaledToSize:(CGSize)size
+{
+    //avoid redundant drawing
+    if (CGSizeEqualToSize(originalImage.size, size))
+    {
+        return originalImage;
+    }
+    
+    //create drawing context
+    UIGraphicsBeginImageContextWithOptions(size, NO, 0.0f);
+    
+    //draw
+    [originalImage drawInRect:CGRectMake(0.0f, 0.0f, size.width, size.height)];
+    
+    //capture resultant image
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    //return image
+    return image;
+}
+
 - (UIImage *)getMarkerImage:(NSDictionary *)marker
 {
+    NSDictionary *bob = marker[@"icon"];
+    NSString *sally = bob[@"uri"];
+    
     NSString *markerPath = marker[@"icon"][@"uri"];
-    CGFloat markerScale = ((NSNumber*)marker[@"icon"][@"scale"]).doubleValue;
+    
+    if (!markerPath) {
+        return nil;
+    }
     
     if (!markerImages[markerPath]) {
         UIImage *markerImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:markerPath]]];
         
-        UIImage *markerScaled = [UIImage imageWithCGImage:[markerImage CGImage]
-                                                    scale:(markerScale)
-                                              orientation:(markerImage.imageOrientation)];
+        if (!markerImage) {
+            return nil;
+        }
+        
+        UIImage *markerScaled = markerImage;
+        
+        CGFloat markerWidth = ((NSNumber*)marker[@"width"]).doubleValue;
+        CGFloat markerHeight = ((NSNumber*)marker[@"height"]).doubleValue;
+        
+        if (markerWidth > 0 && markerHeight > 0) {
+            markerScaled = [self image:markerImage scaledToSize:CGSizeMake(markerWidth, markerHeight)];
+        }
         
         [markerImages setObject:markerScaled forKey:markerPath];
     }
