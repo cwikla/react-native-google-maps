@@ -339,6 +339,7 @@
         }
         mapMarker.position = CLLocationCoordinate2DMake(latitude, longitude);
         mapMarker.title = marker[@"title"] ? marker[@"title"] : nil;
+        mapMarker.zIndex = ((NSNumber*)marker[@"zIndex"]).intValue;
         
         if (marker[@"icon"]) {
             UIImage *icon = [self getMarkerImage:marker];
