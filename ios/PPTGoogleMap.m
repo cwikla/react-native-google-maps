@@ -329,6 +329,7 @@
     
     for (NSDictionary* marker in inMarkers) {
         NSString *key = marker[@"key"];
+        key = key ? key : marker[@"id"];
         CLLocationDegrees latitude = ((NSNumber*)marker[@"latitude"]).doubleValue;
         CLLocationDegrees longitude = ((NSNumber*)marker[@"longitude"]).doubleValue;
         
@@ -460,6 +461,8 @@
     return markerImages[markerPath];
 }
 
+
+#if 0
 /**
  * Sets the user's location marker, if it has been enabled. Don't be alarmed if the marker looks funny when testing the app in
  * the simulator, there's a known bug: https://code.google.com/p/gmaps-api-issues/issues/detail?id=5472
@@ -600,5 +603,6 @@
         self.settings.allowScrollGesturesDuringRotateOrZoom = NO;
     }
 }
+#endif
 
 @end

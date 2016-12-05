@@ -12,7 +12,7 @@
 		0CAA913D1BFB8086005A91B8 /* PPTGoogleMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CAA913B1BFB8086005A91B8 /* PPTGoogleMap.m */; };
 		5597FF181DA325B5007F2D2A /* PPTGooglePlacePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 5597FF171DA325B5007F2D2A /* PPTGooglePlacePicker.m */; };
 		55DC02A51D72519A00AEA847 /* UIColor+HexString.m in Sources */ = {isa = PBXBuildFile; fileRef = 55DC02A41D72519A00AEA847 /* UIColor+HexString.m */; };
-		5D9642BACE7DC2267DA0ECB2 /* Pods_PPTMapView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A69FBAD01C1535D46AFB701B /* Pods_PPTMapView.framework */; };
+		907D0191B47F387868324CA4 /* Pods_PPTMapView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91600415097B7F1E1A17249E /* Pods_PPTMapView.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -35,13 +35,13 @@
 		0CAA913A1BFB8086005A91B8 /* PPTGoogleMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPTGoogleMap.h; sourceTree = "<group>"; };
 		0CAA913B1BFB8086005A91B8 /* PPTGoogleMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPTGoogleMap.m; sourceTree = "<group>"; };
 		134814201AA4EA6300B7C361 /* libPPTMapView.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPPTMapView.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		23EB8C083093327BD62E3711 /* Pods-PPTMapView.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PPTMapView.release.xcconfig"; path = "Pods/Target Support Files/Pods-PPTMapView/Pods-PPTMapView.release.xcconfig"; sourceTree = "<group>"; };
 		5597FF161DA325B5007F2D2A /* PPTGooglePlacePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPTGooglePlacePicker.h; sourceTree = "<group>"; };
 		5597FF171DA325B5007F2D2A /* PPTGooglePlacePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPTGooglePlacePicker.m; sourceTree = "<group>"; };
 		55DC02A31D72519A00AEA847 /* UIColor+HexString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+HexString.h"; sourceTree = "<group>"; };
 		55DC02A41D72519A00AEA847 /* UIColor+HexString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+HexString.m"; sourceTree = "<group>"; };
-		A69FBAD01C1535D46AFB701B /* Pods_PPTMapView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PPTMapView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		DB5BA5BCA865538FCFCA7558 /* Pods-PPTMapView.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PPTMapView.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PPTMapView/Pods-PPTMapView.debug.xcconfig"; sourceTree = "<group>"; };
+		73A3802BA6ADD98312E789B2 /* Pods-PPTMapView.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PPTMapView.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PPTMapView/Pods-PPTMapView.debug.xcconfig"; sourceTree = "<group>"; };
+		8A4261995EC5E6C5347FD44D /* Pods-PPTMapView.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PPTMapView.release.xcconfig"; path = "Pods/Target Support Files/Pods-PPTMapView/Pods-PPTMapView.release.xcconfig"; sourceTree = "<group>"; };
+		91600415097B7F1E1A17249E /* Pods_PPTMapView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PPTMapView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,7 +49,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5D9642BACE7DC2267DA0ECB2 /* Pods_PPTMapView.framework in Frameworks */,
+				907D0191B47F387868324CA4 /* Pods_PPTMapView.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -62,6 +62,15 @@
 				134814201AA4EA6300B7C361 /* libPPTMapView.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		2AB0D4D154BC8EAD411DD694 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				73A3802BA6ADD98312E789B2 /* Pods-PPTMapView.debug.xcconfig */,
+				8A4261995EC5E6C5347FD44D /* Pods-PPTMapView.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 		58B511D21A9E6C8500147676 = {
@@ -78,24 +87,15 @@
 				0CAA8FF71BFB74B7005A91B8 /* PPTGoogleMapProvider.h */,
 				0CAA8FF81BFB74B7005A91B8 /* PPTGoogleMapProvider.m */,
 				134814211AA4EA7D00B7C361 /* Products */,
-				758A80F3AFCBAF77C2E2007C /* Pods */,
-				BA150366278972D06F7F71D5 /* Frameworks */,
+				2AB0D4D154BC8EAD411DD694 /* Pods */,
+				89AB6E815F6D1C34FE493334 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
-		758A80F3AFCBAF77C2E2007C /* Pods */ = {
+		89AB6E815F6D1C34FE493334 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				DB5BA5BCA865538FCFCA7558 /* Pods-PPTMapView.debug.xcconfig */,
-				23EB8C083093327BD62E3711 /* Pods-PPTMapView.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
-		BA150366278972D06F7F71D5 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				A69FBAD01C1535D46AFB701B /* Pods_PPTMapView.framework */,
+				91600415097B7F1E1A17249E /* Pods_PPTMapView.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -330,9 +330,8 @@
 		};
 		58B511F01A9E6C8500147676 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DB5BA5BCA865538FCFCA7558 /* Pods-PPTMapView.debug.xcconfig */;
+			baseConfigurationReference = 73A3802BA6ADD98312E789B2 /* Pods-PPTMapView.debug.xcconfig */;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = "-ObjC";
@@ -343,9 +342,8 @@
 		};
 		58B511F11A9E6C8500147676 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 23EB8C083093327BD62E3711 /* Pods-PPTMapView.release.xcconfig */;
+			baseConfigurationReference = 8A4261995EC5E6C5347FD44D /* Pods-PPTMapView.release.xcconfig */;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = "-ObjC";
